@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Telegram Clone</title>
+    <style>
+        * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+}
+
+.app {
+    display: flex;
+    height: 100vh;
+}
+
+.sidebar {
+    width: 35%;
+    background-color: #1d9466;
+    color: white;
+    padding: 20px;
+    display: inline-block;
+
+}
+
+.sidebar-header {
+    font-size: 24px;
+    margin-bottom: 30px;
+}
+
+.contact-list {
+    flex-grow: 1;
+    overflow-y: auto;
+}
+
+.contact {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    cursor: pointer;
+    margin-bottom: 15px;
+}
+
+.contact img {
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.contact:hover {
+    background-color: #34495e;
+}
+
+.chat-window {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    background-image: url("telegrampic.jpg");
+    padding: 20px;
+}
+
+.chat-header {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.messages {
+    flex-grow: 1;
+    overflow-y: auto;
+    margin-bottom: 20px;
+    background-image: url("telegrampic.jpg");
+}
+
+.message {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 10px;
+}
+
+.message.sent {
+    justify-content: flex-end;
+}
+
+.message.received {
+    justify-content: flex-start;
+}
+
+.message p {
+    max-width: 70%;
+    padding: 10px;
+    border-radius: 15px;
+    background-color: #ecf0f1;
+}
+
+.message.sent p {
+    background-color: #0e2f44;
+    color: white;
+}
+
+.message-input {
+    display: flex;
+}
+
+.message-input input {
+    flex-grow: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 15px;
+}
+
+.message-input button {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    padding: 10px;
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+.message-input button:hover {
+    background-color: #2980b9;
+}
+
+.in2{
+    padding: 16px;
+}
+h1{
+    color: #eff5f1;
+    display: inline-block;
+    position: relative;
+    top: -8px;
+    left: 16px;
+}
+.searchbar{
+    padding: 16PX;
+    border-radius: 6px;
+}
+.logo{
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+}
+#schbtn{
+    position: relative;
+    left: -200px;
+    top: 18px;
+}
+#menu{
+    cursor: pointer;
+}
+#menu:hover{
+    transform: scaleX(1.4);
+}
+#settings{
+    position: relative;
+    left: 60%;
+}
+    </style>
+</head>
+<body>
+    <div class="app">
+        <div class="sidebar">
+            <img id="menu" class="logo" src="menu_Button.png" alt="">
+          <h1>Telegram</h1>
+          <img id="settings" class="logo" src="settings_Button.png" alt="">
+            <div class="sidebar-header">
+
+            </div>
+            <div class="contact-list">
+                <div class="contact" onclick="openChat('John')">
+                    <img class="logo" src="Macdonalds.jpg" alt="John">
+                    <span>John</span>
+                </div>
+                <div class="contact" onclick="openChat('Alice')">
+                    <img class="logo" src="McDonald's_Golden_Arches (1).svg" alt="Alice">
+                    <span>Alice</span>
+                </div>
+                <div class="contact">
+                    <img class="logo" src="ecommerce/istockphoto-1849879977-1024x1024.jpg" alt="">
+                    <span>Ken</span>
+                </div>
+                <div class="contact">
+                    <img class="logo" src="ecommerce/eduardo-soares-_TWuQeTq-GY-unsplash.jpg" alt="">
+                    <span>Dan</span> 
+                </div>
+                <div class="contact">
+                    <img class="logo" src="ecommerce/inside-weather-dbH_vy7vICE-unsplash.jpg" alt="">
+                    <span>Weldon</span>
+                </div>
+                <div class="contact">
+                <img class="logo" src="ecommerce/istockphoto-1195258022-1024x1024.jpg" alt="">
+                <span>Fred</span>
+                </div>
+                <div class="contact">
+                <img class="logo" src="ecommerce/BACK.jpg" alt="">
+                <span>Edwin</span> 
+                </div>
+                <div class="contact">
+                    <img class="logo" src="ecommerce/fernando-andrade-potCPE_Cw8A-unsplash.jpg" alt="">
+                    <span>Sarsh</span> 
+                </div>
+                <div class="contact">
+                    <img class="logo" src="ecommerce/istockphoto-1167935886-1024x1024.jpg" alt="">
+                    <span>Ellieh</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="chat-window">
+            <div class="chat-header">
+                <h3 id="chat-name">Search</h3>
+                <input class="searchbar" type="text">
+                <img class="logo" src="search_Button.png" id="schbtn" alt="">
+            </div>
+            <div class="messages">
+                <!-- Messages will appear here -->
+            </div>
+            <div class="message-input">
+                <input type="text" id="messageInput" placeholder="Type a message...">
+                <button onclick="sendMessage()">Send</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+       let currentChat = '';
+
+function openChat(name) {
+    currentChat = name;
+    document.getElementById('chat-name').innerText = name;
+    loadMessages();
+}
+
+function loadMessages() {
+    const messagesContainer = document.querySelector('.messages');
+    messagesContainer.innerHTML = ''; // Clear existing messages
+
+    // Example messages for each contact
+    const exampleMessages = {
+        'John': [
+            { sender: 'received', text: 'Hey there!' },
+            { sender: 'sent', text: 'Hello!' }
+        ],
+        'Alice': [
+            { sender: 'received', text: 'Are you free later?' },
+            { sender: 'sent', text: 'Yes, I am!' }
+        ]
+    };
+
+    const messages = exampleMessages[currentChat] || [];
+    messages.forEach(message => {
+        const messageElement = document.createElement('div');
+        messageElement.classList.add('message', message.sender);
+        messageElement.innerHTML = `<p>${message.text}</p>`;
+        messagesContainer.appendChild(messageElement);
+    });
+}
+
+function sendMessage() {
+    const input = document.getElementById('messageInput');
+    const messageText = input.value.trim();
+    if (messageText) {
+        const messageElement = document.createElement('div');
+        messageElement.classList.add('message', 'sent');
+        messageElement.innerHTML = `<p>${messageText}</p>`;
+        document.querySelector('.messages').appendChild(messageElement);
+        input.value = ''; // Clear input field
+        loadMessages(); // Update chat with new messages
+    }
+}
+ 
+    </script>
+</body>
+</html>
